@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+{% block content %}
+    <article class="media content-section">
+          <div class="media-body">
+            <div class="article-metadata">
+            <h2><a class="mr-2"> UserName: {{ current_user.username }}</a></h2>
+              <small class="text-muted"> Email: {{ current_user.email }}</small>
+            </div>
+          </div>
+        </article>
+    <h1>Welcome to the Profile Page</h1>
+{% endblock content %}
