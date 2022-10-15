@@ -1,9 +1,8 @@
-from flask import (render_template, url_for, flash, json,
-                   redirect, request, abort, Blueprint)
+from flask import (render_template, url_for, flash, redirect, request, abort, Blueprint)
 from flask_login import current_user, login_required
 from flaskarticles import db
 from flaskarticles.Models.models import Post
-from flaskarticles.Posts.forms import PostForm, SearchForm
+from flaskarticles.blueprints.Posts.forms import PostForm, SearchForm
 from flaskarticles.utils import docache
 
 posts = Blueprint('posts', __name__)
@@ -31,6 +30,7 @@ def post(post_id):
 
 
 @posts.route("/post/<int:post_id>/update", methods=['GET', 'POST'])
+@docache(minutes=5, content_type='post.html')
 @login_required
 def update_post(post_id):
     post = Post.query.get_or_404(post_id)

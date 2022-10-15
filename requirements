@@ -2,6 +2,7 @@ flask
 Flask
 Flask-Bcrypt
 Flask-Login
+flask_migrate
 Flask-SQLAlchemy
 Flask-WTF
 Jinja2

@@ -1,11 +1,11 @@
-import migrate as migrate
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
 from flaskarticles.config import Config
-from flaskarticles.Posts.forms import SearchForm
+from flaskarticles.blueprints.Posts.forms import SearchForm
 from flask_migrate import Migrate
+
 
 import werkzeug
 werkzeug.cached_property = werkzeug.utils.cached_property
@@ -23,16 +23,16 @@ def create_app(config_class=Config):
     app = Flask(__name__)
     app.config.from_object(Config)
     app.config['SECRET_KEY'] = Config.SECRET_KEY
-    app.config['SQLALCHEMY_DATABASE_URI'] = Config.SQLALCHEMY_DATABASE_URI
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
     #pass the application to all of the extentions
     db.init_app(app)
     bcrypt.init_app(app)
     login_manager.init_app(app)
     migrate.init_app(app, db)
 
-    from flaskarticles.Users.routes import users
-    from flaskarticles.Posts.routes import posts
-    from flaskarticles.main.routes import main
+    from flaskarticles.blueprints.Users.routes import users
+    from flaskarticles.blueprints.Posts.routes import posts
+    from flaskarticles.blueprints.main.routes import main
     app.register_blueprint(users)
     app.register_blueprint(posts)
     app.register_blueprint(main)

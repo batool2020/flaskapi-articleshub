@@ -3,7 +3,8 @@ from flask import render_template, url_for, flash, redirect, request
 from flaskarticles import  db, bcrypt
 from flaskarticles.Models.models import User, Post
 from flask_login import login_user, current_user, logout_user, login_required
-from flaskarticles.Users.forms import RegistrationForm, LoginForm
+from flaskarticles.blueprints.Users.forms import RegistrationForm, LoginForm
+from flaskarticles.utils import docache
 
 users = Blueprint('users', __name__)
 
@@ -25,6 +26,7 @@ def register():
 
 
 @users.route("/login", methods=['GET', 'POST'])
+# @docache(minutes=3, content_type='home.html')
 def login():
     if current_user.is_authenticated:
         return redirect(url_for('main.home'))
@@ -58,6 +60,7 @@ def account():
 
 # when clicking on username, a nwe page will show up with their articles posted
 @users.route("/user/<string:username>")
+@docache(minutes=1, content_type='userarticles.html')
 def user_articles(username):
     page = request.args.get('page', 1, type=int)
     user = User.query.filter_by(username=username).first_or_404() # filter on username

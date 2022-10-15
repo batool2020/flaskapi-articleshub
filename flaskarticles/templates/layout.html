@@ -33,7 +33,7 @@
             <div class="navbar-nav">
             <form method="POST" class="nav-item nav-link" action="{{ url_for('posts.search') }}">
                         {{ form.hidden_tag() }}
-               <input type="search" placeholder="Search.." name="content" id="postsearch">
+               <input type="search" placeholder="Search.." name="content" style="height:90%" style="width:80%"   id="postsearch">
                 <button type="submit" class="btn btn-outline-warning"  >Submit</button>
 
             </form>
