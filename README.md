@@ -1,9 +1,11 @@
-# Developing API endpoint assessment - Power to Fly. 
+## Developing API endpoint assessment - Power to Fly. 
 
+
+Link to Google Docs Full Documentation: https://docs.google.com/document/d/1ExPaoux0RJoaaLQwvciY0mQ2KldO9POVRmmbW9iuGP4/edit?usp=sharing
 
 
 # Prepared By: Batool Alsulaibi
-# Date: 10/16/2022
+### Date: 10/17/2022
 
 ## Introduction:
 
