@@ -5,8 +5,6 @@ from flask_login import LoginManager
 from flaskarticles.config import Config
 from flaskarticles.blueprints.Posts.forms import SearchForm
 from flask_migrate import Migrate
-
-
 import werkzeug
 werkzeug.cached_property = werkzeug.utils.cached_property
 

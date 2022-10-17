@@ -60,7 +60,7 @@ def account():
 
 # when clicking on username, a nwe page will show up with their articles posted
 @users.route("/user/<string:username>")
-@docache(minutes=1, content_type='userarticles.html')
+@docache(minutes=3, content_type='userarticles.html')
 def user_articles(username):
     page = request.args.get('page', 1, type=int)
     user = User.query.filter_by(username=username).first_or_404() # filter on username

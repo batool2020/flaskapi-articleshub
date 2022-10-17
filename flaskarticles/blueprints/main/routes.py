@@ -3,7 +3,6 @@ from flaskarticles.Models.models import Post
 main = Blueprint('main', __name__)
 
 
-
 @main.route('/')
 @main.route('/home')
 def home():  # put application's code here

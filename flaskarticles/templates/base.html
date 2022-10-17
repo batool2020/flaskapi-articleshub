@@ -63,31 +63,6 @@
           {% block content %}{% endblock %}
         </div>
 
-      <div class="col-md-4">
-          <div class="content-section">
-            <h3>Filter - Categories</h3>
-              <form method="POST" class="nav-item nav-link">
-            <p class='text-muted'>You can customize your search here.</p>
-                <a class="nav-item nav-link" href="{{ url_for('posts.filter_tech') }}">Technology</a>
-                <a class="nav-item nav-link" href="{{ url_for('posts.filter_tips') }}">Tips</a>
-                <a class="nav-item nav-link" href="{{ url_for('posts.filter_youtube') }}">Youtube</a>
-              </form>
-
-          </div>
-          <div class="content-section">
-            <h3>Filter - Dates</h3>
-              <form method="POST" class="nav-item nav-link">
-            <p class='text-muted'>You can customize the search results here.</p>
-                <a class="nav-item nav-link" href="{{ url_for('posts.filter_before') }}">Published Before 14/10/2022</a>
-                <a class="nav-item nav-link" href="{{ url_for('posts.filter_after') }}">Published with/after 14/10/2022</a>
-              </form>
-
-          </div>
-        </div>
-
-
-
-
       </div>
     </main>
 
