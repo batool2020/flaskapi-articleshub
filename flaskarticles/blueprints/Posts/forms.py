@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, TextAreaField, SubmitField, widgets, SelectMultipleField
+from wtforms import StringField, TextAreaField, SubmitField, DateField
 from wtforms.validators import DataRequired
 
 class PostForm(FlaskForm):
@@ -11,16 +11,6 @@ class PostForm(FlaskForm):
 class SearchForm(FlaskForm):
     content = StringField('Content', validators=[DataRequired()])
 
-
-
-class MultiCheckboxField(SelectMultipleField):
-    widget = widgets.ListWidget(prefix_label=False)
-    option_widget = widgets.CheckboxInput()
-
-
-class SimpleForm(FlaskForm):
-    string_of_files = ['one\r\ntwo\r\nthree\r\n']
-    list_of_files = string_of_files[0].split()
-    # create a list of value/description tuples
-    files = [(x, x) for x in list_of_files]
-    example = MultiCheckboxField('Label', choices=files)
+class DateForm(FlaskForm):
+    startDate = DateField('startDate', validators=[DataRequired()])
+    endDate = DateField('endDate', validators=[DataRequired()])

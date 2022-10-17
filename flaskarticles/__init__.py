@@ -3,7 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
 from flaskarticles.config import Config
-from flaskarticles.blueprints.Posts.forms import SearchForm
+from flaskarticles.blueprints.Posts.forms import SearchForm, DateForm
 from flask_migrate import Migrate
 import werkzeug
 werkzeug.cached_property = werkzeug.utils.cached_property
@@ -35,11 +35,11 @@ def create_app(config_class=Config):
     app.register_blueprint(posts)
     app.register_blueprint(main)
 
+
     @app.context_processor
     def base():
-        form = SearchForm()
-        return dict(form=form)
-
+        form2 = DateForm()
+        return dict(form=form2)
     return app
 
 

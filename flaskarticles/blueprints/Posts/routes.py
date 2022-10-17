@@ -2,9 +2,9 @@ from flask import (render_template, url_for, flash, redirect, request, abort, Bl
 from flask_login import current_user, login_required
 from flaskarticles import db
 from flaskarticles.Models.models import Post
-from flaskarticles.blueprints.Posts.forms import PostForm, SearchForm, SimpleForm
+from flaskarticles.blueprints.Posts.forms import PostForm, SearchForm, DateForm
 from flaskarticles.utils import docache
-from sqlalchemy import or_
+from sqlalchemy import or_, and_
 
 
 posts = Blueprint('posts', __name__)
@@ -66,25 +66,14 @@ def delete_post(post_id):
 
 
 
-
 # PAss Form to NavBar
+
 @posts.context_processor
-def base():
-    form = SearchForm()
-    return dict(form=form)
+def base2():
+    form2 = DateForm()
+    return dict(form=form2)
 
 
-@posts.route("/search", methods=['POST'])
-def search():
-    form1 = SearchForm()
-    if form1.validate_on_submit():
-        page = request.args.get('page', 1, type=int)
-        postslist = Post.query.filter(Post.title.contains(form1.content.data))\
-            .paginate(page=page)
-        flash('Search Result', 'success')
-        return render_template('searchposts.html', posts=postslist, form=form1)
-    flash('No Search Result', 'danger')
-    return redirect(url_for('main.home'))
 
 
 # FIX THE FILTER TECH AND ADD OTHER FILTERS
@@ -117,18 +106,38 @@ def filter_youtube():
         flash('Filter Result: Social Medial- Youtube', 'success')
         return render_template('youtubeFilter.html', posts=postslist)
 
-@posts.route("/filter-before")
+@posts.route("/filter-before", methods = ['GET','POST'])
 def filter_before():
+    global start
+    global end
+    if request.method == 'POST':
+        form2 = DateForm()
+        start = form2.startDate.data
+        end = form2.endDate.data
+        if form2.validate_on_submit():
+            page = request.args.get('page', 1, type=int)
+            start = request.args.get('start', form2.startDate.data)
+            end = request.args.get('end', form2.endDate.data)
+            postslist = Post.query.filter(and_(Post.date_posted < end, Post.date_posted >= start)) \
+           .paginate(page=page, per_page=4)
+            flash('Search Result', 'success')
+            return render_template('beforeFilter.html', posts=postslist, form=form2)
+        flash('No Filter Result', 'danger')
+        return redirect(url_for('main.home'))
+    else:
+        form3 = DateForm()
         page = request.args.get('page', 1, type=int)
-        postslist = Post.query.filter(Post.date_posted < '2022-10-14') \
-            .paginate(page=page, per_page=6)
-        flash('Filter Result', 'success')
-        return render_template('beforeFilter.html', posts=postslist)
+        form3.startDate.data = start
+        form3.endDate.data = end
+        postslist = Post.query.filter(and_(Post.date_posted < end, Post.date_posted >= start)) \
+            .paginate(page=page, per_page=4)
+        flash('Search Result', 'success')
+        return render_template('beforeFilter.html', posts=postslist, form=form3)
 
 @posts.route("/filter-after")
 def filter_after():
         page = request.args.get('page', 1, type=int)
-        postslist = Post.query.filter( '2022-10-14' <= Post.date_posted ) \
+        postslist = Post.query.filter('2022-10-14' <= Post.date_posted ) \
             .paginate(page=page, per_page=6)
         flash('Filter Result', 'success')
         return render_template('afterFilter.html', posts=postslist)
