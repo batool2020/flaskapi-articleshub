@@ -1,11 +1,10 @@
 from flask import (render_template, url_for, flash, redirect, request, abort, Blueprint)
 from flask_login import current_user, login_required
-from flaskarticles import db
+from flaskarticles import db, cache
 from flaskarticles.Models.models import Post
 from flaskarticles.blueprints.Posts.forms import PostForm, SearchForm, DateForm
 from flaskarticles.utils import docache
 from sqlalchemy import or_, and_
-
 
 posts = Blueprint('posts', __name__)
 
@@ -80,6 +79,7 @@ def base2():
 ## THEN GO TO DOCUMENTATION AND SUBMITTTTT
 
 @posts.route("/filter-tech")
+@docache(minutes=5, content_type='post.html')
 def filter_tech():
 
     page = request.args.get('page', 1, type=int)
@@ -90,6 +90,7 @@ def filter_tech():
 
 
 @posts.route("/filter-tips")
+@docache(minutes=5, content_type='post.html')
 def filter_tips():
         page = request.args.get('page', 1, type=int)
         postslist = Post.query.filter(Post.title.contains(" % Tips % ")) \
@@ -99,6 +100,7 @@ def filter_tips():
 
 
 @posts.route("/filter-youtube")
+@docache(minutes=5, content_type='post.html')
 def filter_youtube():
         page = request.args.get('page', 1, type=int)
         postslist = Post.query.filter(Post.title.contains(" % Youtube % ")) \
@@ -107,6 +109,7 @@ def filter_youtube():
         return render_template('youtubeFilter.html', posts=postslist)
 
 @posts.route("/filter-before", methods = ['GET','POST'])
+@docache(minutes=5, content_type='post.html')
 def filter_before():
     global start
     global end
@@ -134,11 +137,4 @@ def filter_before():
         flash('Search Result', 'success')
         return render_template('beforeFilter.html', posts=postslist, form=form3)
 
-@posts.route("/filter-after")
-def filter_after():
-        page = request.args.get('page', 1, type=int)
-        postslist = Post.query.filter('2022-10-14' <= Post.date_posted ) \
-            .paginate(page=page, per_page=6)
-        flash('Filter Result', 'success')
-        return render_template('afterFilter.html', posts=postslist)
 

@@ -3,7 +3,7 @@ from functools import wraps
 from flask import Response
 
 def docache(minutes=5, content_type='application/html; charset=utf-8'):
-    """ Flask decorator that allow to set Expire and Cache headers. """
+    """ Flask decorator to set Expire and Cache headers. """
     def fwrap(f):
         @wraps(f)
         def wrapped_f(*args, **kwargs):
