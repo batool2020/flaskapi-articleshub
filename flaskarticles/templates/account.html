@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+            <h2>Profile Page</h2>
+    <article class="media content-section">
+         <div class="media-body">
+             <div class="container">
+            <div class="article-metadata">
+                <small>Please Click on your name to ge your posts </small>
+            <small><a class="mr-2" href="{{ url_for('users.user_articles', username=current_user.username) }}"> UserName: {{ current_user.username }}</a></small>
+              <div>
+                  <small class="text-muted"> Email: {{ current_user.email }}</small>
+              </div>
+
+            </div>
+             </div>
+         </div>
+        </article>
+{% endblock content %}

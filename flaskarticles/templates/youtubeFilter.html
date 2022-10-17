@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+{% block content %}
+        {% for post in posts.items %}
+        <article class="media content-section">
+          <div class="media-body">
+            <div class="article-metadata">
+              <a class="mr-2" href="{{ url_for('users.user_articles', username=post.author.username) }}">{{ post.author.username }}</a>
+              <small class="text-muted">{{ post.date_posted.strftime('%Y-%m-%d') }}</small>
+            </div>
+            <h2><a class="article-title" href="{{ url_for('posts.post', post_id=post.id) }}">{{ post.title }}</a></h2>
+            <p class="article-content">{{ post.content }}</p>
+          </div>
+        </article>
+    {% endfor %}
+ {% for page_num in posts.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %} <!-- How many pages left and right will show up, edge: most left and most right, current: left and right to the current page le..lc c rc..re-->
+      {% if page_num %}
+        {% if posts.page == page_num %} <!--Current Page - for styling it-->
+          <a class="btn btn-info mb-4" href="{{ url_for('posts.filter_youtube', page=page_num) }}">{{ page_num }}</a>  <!--Solid color-->
+        {% else %}
+          <a class="btn btn-outline-info mb-4" href="{{ url_for('posts.filter_youtube', page=page_num) }}">{{ page_num }}</a> <!--Other buttone-->
+        {% endif %}
+      {% else %}
+        ...
+      {% endif %}
+    {% endfor %}
+
+    <div class="col-md-1">
+          <div class="content-section">
+
+          </div>
+    </div>
+{% endblock content %}
+
+
+<!--
+
+<div class="content-section">
+    <form method="POST" action="">-->
